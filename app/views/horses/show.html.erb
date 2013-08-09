@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @horse.name %>
+</p>
+
+<p>
+  <strong>Sex:</strong>
+  <%= @horse.sex %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @horse.year %>
+</p>
+
+<p>
+  <strong>Sire:</strong>
+  <%= @horse.sire.name if @horse.sire %>
+</p>
+
+<p>
+  <strong>Dam:</strong>
+  <%= @horse.dam.name if @horse.dam %>
+</p>
+
+<%= link_to 'Edit', edit_horse_path(@horse) %> |
+<%= link_to 'Back', horses_path %>
