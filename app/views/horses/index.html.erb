@@ -9,9 +9,7 @@
       <th>Year</th>
       <th>Sire</th>
       <th>Dam</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th colspan=4>Actions</th>
     </tr>
   </thead>
 
@@ -27,6 +25,7 @@
         <td><%= link_to 'Show', horse %></td>
         <td><%= link_to 'Edit', edit_horse_path(horse) %></td>
         <td><%= link_to 'Destroy', horse, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Tree', tree_horse_path(horse) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -34,4 +33,10 @@
 
 <br>
 
+<form>
+<input type="submit" value="Search">
+<input type="text" name="search">
+</form>
+<br>
 <%= link_to 'New Horse', new_horse_path %>
+

@@ -4,7 +4,11 @@ class HorsesController < ApplicationController
   # GET /horses
   # GET /horses.json
   def index
-    @horses = Horse.order("name")
+    if params[:search] && params[:search] != ""
+      @horses = Horse.where("name like '%#{params[:search].downcase}%'")
+    else
+      @horses = Horse.order("name")
+    end
   end
 
   # GET /horses/1
@@ -61,6 +65,9 @@ class HorsesController < ApplicationController
     end
   end
 
+  def tree
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_horse
@@ -71,4 +78,5 @@ class HorsesController < ApplicationController
     def horse_params
       params.require(:horse).permit(:name, :sex, :year, :sire_id, :dam_id)
     end
+
 end
