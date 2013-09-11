@@ -85,13 +85,13 @@ class HorsesController < ApplicationController
     def build_tree_generation(gen)
       found = false
       (2**gen - 1).step(2**(gen+1)-2,2) do |idx|
-        horse = Horse.find(@tree[idx/2])
-	if horse.sire
+        horse = Horse.find(@tree[idx/2]) if @tree[idx/2]
+	if horse and horse.sire
           @tree[idx] = horse.sire.id
           @names[idx] = horse.sire.name
 	  found = true
 	end
-	if horse.dam
+	if horse and horse.dam
           @tree[idx+1] = horse.dam.id
           @names[idx+1] = horse.dam.name
 	  found = true
