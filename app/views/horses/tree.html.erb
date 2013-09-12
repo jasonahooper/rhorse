@@ -1,8 +1,9 @@
 <h2>Horse Family Tree</h2>
 
-<table>
+<table border="0">
 
   <tbody>
+
     <tr>
       <td></td>
       <td></td>
@@ -29,7 +30,7 @@
     <tr>
       <td></td>
       <td></td>
-      <td><%= @names[3] %></td>
+      <td><%= link_to @names[3], tree_horse_path(@tree[3]) if @names[3] %></td>
     </tr>
 
     <tr>
@@ -57,7 +58,7 @@
 
     <tr>
       <td></td>
-      <td><%= @names[1] %></td>
+      <td><%= link_to @names[1], tree_horse_path(@tree[1]) if @names[1] %></td>
     </tr>
 
     <tr>
@@ -170,7 +171,7 @@
 
     <tr>
       <td></td>
-      <td><%= @names[2] %></td>
+      <td><%= link_to @names[2], tree_horse_path(@tree[2]) if @names[2] %></td>
     </tr>
 
     <tr>
@@ -195,7 +196,7 @@
       <td></td>
       <td><%= @names[28] %></td>
     </tr>
-
+    
     <tr>
       <td></td>
       <td></td>
@@ -228,3 +229,5 @@
   </tbody>
 
 </table>
+
+<%= link_to 'Back', horses_path %>
