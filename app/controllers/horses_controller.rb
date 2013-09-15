@@ -5,7 +5,8 @@ class HorsesController < ApplicationController
   # GET /horses.json
   def index
     if params[:search] && params[:search] != ""
-      @horses = Horse.where("name like '%#{params[:search].downcase}%'")
+#      @horses = Horse.where("name like '%#{params[:search].downcase}%'").order("name")
+      @horses = Horse.where("name like ?", '%' + params[:search].downcase + '%').order("name")
     else
       @horses = Horse.order("name")
     end
