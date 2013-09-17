@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20130809171112) do
   end
 
   add_index "horses", ["dam_id"], name: "index_horses_on_dam_id"
-  add_index "horses", ["name"], name: "index_horses_on_name", unique: true
+  add_index "horses", ["name"], name: "index_horses_on_name"
   add_index "horses", ["sire_id"], name: "index_horses_on_sire_id"
 
 end

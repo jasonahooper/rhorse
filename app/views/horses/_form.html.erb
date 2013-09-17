@@ -17,7 +17,10 @@
   </div>
   <div class="field">
     <%= f.label :sex %><br>
-    <%= f.select :sex, ["m","f"] %>
+    <%= f.radio_button :sex, "h" %>
+    <%= f.label "Horse" %>
+    <%= f.radio_button :sex, "m" %>
+    <%= f.label "Mare" %><br>
   </div>
   <div class="field">
     <%= f.label :year %><br>

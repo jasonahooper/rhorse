@@ -5,10 +5,11 @@ class HorsesController < ApplicationController
   # GET /horses.json
   def index
     if params[:search] && params[:search] != ""
-#      @horses = Horse.where("name like '%#{params[:search].downcase}%'").order("name")
-      @horses = Horse.where("name like ?", '%' + params[:search].downcase + '%').order("name")
+      search = '%' + params[:search].downcase + '%'
+      @horses = Horse.paginate :page => params[:page], :conditions => ["name like ?", search], 
+        :order => "name"
     else
-      @horses = Horse.order("name")
+      @horses = Horse.paginate :page => params[:page], :order => "name"
     end
   end
 
@@ -109,7 +110,7 @@ class HorsesController < ApplicationController
 	      end
       end
       gen += 1
-      return nil if !found
+      return nil if !found || gen > 4
       build_tree_generation(gen)
     end
 

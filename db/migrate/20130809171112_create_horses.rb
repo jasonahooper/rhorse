@@ -9,6 +9,6 @@ class CreateHorses < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :horses, :name, unique: true
+    add_index :horses, :name
   end
 end
