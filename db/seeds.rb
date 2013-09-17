@@ -6,27 +6,37 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 count = 0
-File.open("../../dosprogs/rhorse/HORSEMST.TXT","r") do |infile|
-  while line = infile.gets do
-    horse	= line[0..7] 	    # ID
-    name 	= line[8..42] 	    # name
-    sire 	= line[43..50]	    # sire
-    dam 	= line[51..58]	    # dam
-    trainer	= line[59..66]	    # trainer
-    year	= line[67..70]	    # trainer
-    sex		= line[71].downcase	# sex
-
-    sire = sire.to_i + 1
-    sire = nil if sire == 1
-
-    dam = dam.to_i + 1    
-    dam = nil if dam == 2
-
-    year = nil if year.to_i == 0
-
-    Horse.create(name: name, year: year.to_i, sire_id: sire, dam_id: dam, sex: sex)
+File.open("../../dosprogs/rhorse/JASON.TXT","r") do |infile|
+  infile.gets # skip first line
+  while line = infile.gets.chomp! do
 
     count += 1
+    
+    horsenum	= line[0..7].to_i	# old ID
+    name 	= line[8..42].rstrip   	# name
+    sire 	= line[43..50].to_i    	# sire
+    dam 	= line[51..58].to_i    	# dam
+    trainer	= line[59..66]	    	# trainer
+    year	= line[67..70].to_i    	# year
+    sex		= line[71].downcase	# sex
+
+    while count < horsenum
+      Horse.create name: "*** was missing ***"
+      count += 1
+    end
+
+    sire = nil if sire == 0
+    dam = nil if dam == 1
+    year = nil if year == 0
+    name = "*** was blanks ***" if name == ""
+
+    horse = Horse.create(
+              name: name, year: year, sire_id: sire, dam_id: dam, sex: sex)
+    if horse.id != horsenum.to_i
+      puts "BAD: #{horse.id} != #{horsenum}"
+      exit -999
+    end
+
     puts "Processed #{count}" if count % 1000 == 0
   end
 end
