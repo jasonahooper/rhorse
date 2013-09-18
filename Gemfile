@@ -50,7 +50,7 @@ end
 
 # Use debugger
 # gem 'byebug', group: [:development, :test]
-gem 'debugger', group: [:development, :test]
+# gem 'debugger', group: [:development, :test]
 
 # Pagination
 gem 'will_paginate'
