@@ -2,6 +2,7 @@ Rhorse::Application.routes.draw do
   resources :horses do
     member do
       get 'tree'
+      get 'children'
     end
   end
   root      'horses#index'

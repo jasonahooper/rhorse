@@ -1,44 +1,10 @@
 <h2>Listing horses</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Sex</th>
-      <th>Year</th>
-      <th>Sire</th>
-      <th>Dam</th>
-      <th colspan=4>Actions</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @horses.each do |horse| %>
-      <tr>
-        <td><%= horse.id %></td>
-        <td><%= horse.name %></td>
-        <td><%= horse.sex %></td>
-        <td><%= horse.year %></td>
-        <td><%= horse.sire.name if horse.sire %></td>
-        <td><%= horse.dam.name if horse.dam %></td>
-        <td><%= link_to 'Show', horse %></td>
-        <td><%= link_to 'Edit', edit_horse_path(horse) %></td>
-        <td><%= link_to 'Destroy', horse, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= link_to 'Tree', tree_horse_path(horse) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= will_paginate @horses %>
+<%= render 'list' %>
 
 <form>
 <input type="submit" value="Search">
-<input type="text" name="search">
+<input type="text" name="search">Enter characters to search for in a horse name or id:number to search for a horse number.
 </form>
 <br>
 <%= link_to 'New Horse', new_horse_path %>
-

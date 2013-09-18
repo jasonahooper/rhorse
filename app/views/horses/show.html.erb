@@ -9,7 +9,7 @@
 
 <p>
   <strong>Sex:</strong>
-  <%= @horse.sex == "h" ? "Horse" : "Mare" %>
+  <%= @horse.sex == "h" ? "Horse" : @horse.sex == "m" ? "Mare" : "" %>
 </p>
 
 <p>
@@ -28,4 +28,4 @@
 </p>
 
 <%= link_to 'Edit', edit_horse_path(@horse) %> |
-<%= link_to 'Back', horses_path %>
+<%= link_to 'Return to list', horses_path %>

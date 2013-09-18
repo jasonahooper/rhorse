@@ -5,9 +5,14 @@ class HorsesController < ApplicationController
   # GET /horses.json
   def index
     if params[:search] && params[:search] != ""
-      search = '%' + params[:search].downcase + '%'
-      @horses = Horse.paginate :page => params[:page], :conditions => ["name like ?", search], 
+      if params[:search].length > 3 && params[:search][0..2].downcase == "id:"
+        id = params[:search][3..params[:search].length - 1].to_i
+        @horses = Horse.paginate :page => params[:page], :conditions => ["id = ?", id]
+      else
+        search = '%' + params[:search].downcase + '%'
+        @horses = Horse.paginate :page => params[:page], :conditions => ["name like ?", search], 
         :order => "name"
+      end
     else
       @horses = Horse.paginate :page => params[:page], :order => "name"
     end
@@ -71,6 +76,11 @@ class HorsesController < ApplicationController
     @tree = []
     @names = []
     build_tree(params[:id])
+  end
+
+  def children
+    @horses = Horse.paginate :page => params[:page], 
+      :conditions => ["sire_id = ? or dam_id = ?", params[:id], params[:id]], :order => "name"
   end
 
   private
