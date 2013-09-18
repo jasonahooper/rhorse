@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 count = 0
-File.open("../../dosprogs/rhorse/JASON.TXT","r") do |infile|
+File.open("../../dosprogs/rhorse/HORSEMST.TXT","r") do |infile|
   infile.gets # skip first line
   while line = infile.gets.chomp! do
 
