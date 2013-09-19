@@ -1,6 +1,6 @@
 Rhorse::Application.routes.draw do
   resources :horses do
-    get :autocomplete_horse_name, :on => :collection
+    get :complete_sire_name, :on => :collection
     get :tree
     get :children
   end

@@ -83,6 +83,11 @@ class HorsesController < ApplicationController
       :conditions => ["sire_id = ? or dam_id = ?", params[:id], params[:id]], :order => "name"
   end
 
+  def complete_sire_name
+    horses = Horse.where("sex='h' and name like ?", '%' + params[:name] + '%')
+    render json: horses
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_horse
