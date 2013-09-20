@@ -23,4 +23,8 @@ $(document).ready(function() {
       return false;
     }
   })
+ .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+      return $( "<li></li>" )
+        .append( "<a>" + item.name + "</a>" )
+        .appendTo( ul );
 });
