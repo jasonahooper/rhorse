@@ -28,7 +28,7 @@
   </div>
   <div class="field">
     <%= f.label :sire %><br>
-    <%= f.number_field :sire_id %>
+    <%= f.number_field :sire_id, :readonly => true %>
     <%= f.text_field :sire_name, 'data-autocompleteurl' => complete_sire_name_horses_path %>
   </div>
   <div class="field">

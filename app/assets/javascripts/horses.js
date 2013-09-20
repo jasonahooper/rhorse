@@ -9,18 +9,21 @@ $(document).ready(function() {
           name: request.term
         },
         success: function(data) {
-          response(data);
+          response( $.map( data, function( item ) {
+            return {
+              label: item.name,
+              id: item.id
+            }
+          }));
         }
       });
     },
-    focus: function(event, ui) {
-      $('#horse_sire_name').val(ui.item.name);
-      return false;
-    },
-    select: function(event, ui) {
-      $('#horse_sire_name').val(ui.item.name);
+    change: function(event, ui) {
       $('#horse_sire_id').val(ui.item.id);
-      return false;
-    }
+    }, 
+    select: function(event, ui) {
+      $('#horse_sire_id').val(ui.item.id);
+    } 
+/*    return false; ??? */
   })
 });
