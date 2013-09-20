@@ -3,7 +3,7 @@ $(document).ready(function() {
     minLength: 3,
     source: function(request, response) {
       $.ajax({
-        url: 'complete_sire_name',
+        url: $('#horse_sire_name').data('autocompleteurl'),
         dataType: "json",
         data: {
           name: request.term
@@ -23,8 +23,4 @@ $(document).ready(function() {
       return false;
     }
   })
- .data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-      return $( "<li></li>" )
-        .append( "<a>" + item.name + "</a>" )
-        .appendTo( ul );
 });
