@@ -1,8 +1,10 @@
 Rhorse::Application.routes.draw do
   resources :horses do
     get :complete_sire_name, :on => :collection
-    get :tree
-    get :children
+    member do
+      get :tree
+      get :children
+    end
   end
   root      'horses#index'
   # The priority is based upon order of creation: first created -> highest priority.
