@@ -4,6 +4,7 @@ Rhorse::Application.routes.draw do
     get :complete_dam_name, :on => :collection
     member do
       get :tree
+      get :ctree
       get :children
     end
   end
