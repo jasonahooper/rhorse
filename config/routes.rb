@@ -1,6 +1,7 @@
 Rhorse::Application.routes.draw do
   resources :horses do
     get :complete_sire_name, :on => :collection
+    get :complete_dam_name, :on => :collection
     member do
       get :tree
       get :children

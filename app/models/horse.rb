@@ -5,4 +5,7 @@ class Horse < ActiveRecord::Base
   def sire_name
     return sire.name if sire
   end
+  def dam_name
+    return dam.name if dam
+  end
 end

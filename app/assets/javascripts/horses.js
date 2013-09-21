@@ -1,9 +1,9 @@
 $(document).ready(function() {
-  $('#horse_sire_name').autocomplete({
+  $('.autocomplete_horse_name').autocomplete({
     minLength: 3,
     source: function(request, response) {
       $.ajax({
-        url: $('#horse_sire_name').data('autocompleteurl'),
+        url: $(this.element).data('autocompleteurl'),
         dataType: "json",
         data: {
           name: request.term
@@ -19,10 +19,10 @@ $(document).ready(function() {
       });
     },
     change: function(event, ui) {
-      $('#horse_sire_id').val(ui.item.id);
+      $(this.dataset.autocompleteid).val(ui.item.id);
     }, 
     select: function(event, ui) {
-      $('#horse_sire_id').val(ui.item.id);
+      $(this.dataset.autocompleteid).val(ui.item.id);
     } 
 /*    return false; ??? */
   })

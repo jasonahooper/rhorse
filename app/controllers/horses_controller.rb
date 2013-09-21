@@ -88,6 +88,11 @@ class HorsesController < ApplicationController
     render json: horses, :only => [:id, :name]
  end
 
+  def complete_dam_name
+    horses = Horse.where("sex='m' and name like ?", params[:name] + '%').order(:name)
+    render json: horses, :only => [:id, :name]
+ end
+
  private
    # Use callbacks to share common setup or constraints between actions.
    def set_horse
