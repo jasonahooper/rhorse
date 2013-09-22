@@ -168,7 +168,6 @@ class HorsesController < ApplicationController
       end
       curline += 1
     end
-    byebug
     @lines.uniq!
 #   compressMares
 #   makeTable

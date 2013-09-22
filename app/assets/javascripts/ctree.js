@@ -2,7 +2,7 @@ var CtreeFilter = {
   filter_text: function() {
     $('div>div').hide();
     var search = document.getElementById("filterText").value;
-    $('div:contains("' + search + '")').show();
+    $('div:cicontains("' + search + '")').show();
   },
   setup: function() {
     var textboxAndButton =
@@ -13,3 +13,8 @@ var CtreeFilter = {
   }
 }
 $(CtreeFilter.setup);
+$.expr[":"].cicontains = $.expr.createPseudo(function(arg) {
+    return function( elem ) {
+        return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+    };
+});
