@@ -144,10 +144,11 @@ class HorsesController < ApplicationController
    end
 
   def build_ctree
+    @lines.clear
     generations = Math::log(@names.length, 2).floor
     lines = 2**(generations+1) - 2**generations
     logger.info "Building ctree for #{@names[0]} (#{@tree[0]} gens=#{generations} with lines=#{lines}"
-    0.upto(lines) do |idx|
+    0.upto(lines-1) do |idx|
       @lines[idx] = ""
     end
     curline = 0
