@@ -1,4 +1,4 @@
-<h2>Horse Condensed Family Tree</h2>
+<h2>Horse Condensed Family Tree : <%= @names[0] %></h2>
 <div id="ctree">
 <table>
 <% @lines.each do |line| %>
@@ -6,4 +6,5 @@
 <% end %>
 </table>
 </div>
+<br />
 <%= link_to 'Return to list', horses_path %>
