@@ -17,3 +17,6 @@
 
 # Ignore nohup output
 nohup.out
+
+# ignore db backup
+db.dmp
