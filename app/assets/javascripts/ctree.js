@@ -1,13 +1,13 @@
 var CtreeFilter = {
   filter_text: function() {
-    $('div>div').hide();
+    $('tr').hide();
     var search = document.getElementById("filterText").value;
-    $('div:cicontains("' + search + '")').show();
+    $('tr:cicontains("' + search + '")').show();
   },
   setup: function() {
     var textboxAndButton =
-      $('<input type="text" id="filterText"/>' +
-        '<input type="button" id="filterButton" value="Filter"/>');
+      $('<input type="text" id="filterText"/> ' +
+        '<input type="button" id="filterButton" value="Filter"/><br /><br />');
     textboxAndButton.insertBefore('#ctree'); 
     $('#filterButton').click(CtreeFilter.filter_text); 
   }

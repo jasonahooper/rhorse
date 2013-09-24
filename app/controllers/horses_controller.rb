@@ -170,19 +170,20 @@ class HorsesController < ApplicationController
       curline += 1
     end
     @lines.uniq!
-#   compressMares
-#   makeTable
+#   @lines.sort!
+    compressMares
+    makeTable
   end
 
   def compressMares
     @lines.each do |line|
-      if pos = line.index('M:M')
+      if pos = line.index('M:M:')
         count = 0
         while line.slice(pos,2) == "M:"
           count += 1
           pos += 2
         end
-        line.sub!("M:" * count, count.to_s + ":")
+        line.sub!("M:" * count, (count-1).to_s + ":") 
         redo
       end
     end

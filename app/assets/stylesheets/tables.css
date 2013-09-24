@@ -5,3 +5,11 @@
 .dam {
   background-color: pink;
 }
+
+div#ctree table {
+	border-collapse: collapse;	
+}
+
+div#ctree td {
+	border: 1px solid black;
+}
