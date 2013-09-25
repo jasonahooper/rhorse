@@ -143,58 +143,59 @@ class HorsesController < ApplicationController
      build_tree_generation(gen, limit)
    end
 
-  def build_ctree
-    @lines.clear
-    generations = Math::log(@names.length, 2).floor
-    lines = 2**(generations+1) - 2**generations
-    logger.info "Building ctree for #{@names[0]} (#{@tree[0]} gens=#{generations} with lines=#{lines}"
-    0.upto(lines-1) do |idx|
-      @lines[idx] = ""
-    end
-    curline = 0
-    (2**(generations+1)-2).downto(2**(generations)-1) do |idx|
-      if idx %2 == 0
-        @lines[curline] = 'M:' +  @lines[curline] if @names[idx]
-      else
-        @lines[curline] = @names[idx] + ':' +  @lines[curline] if @names[idx]
-      end
-      parent = (idx-1) / 2
-      while parent > 0
-        if parent %2 == 0
-          @lines[curline] = 'M:' +  @lines[curline] if @names[parent]
-        else
-          @lines[curline] = @names[parent] + ':' +  @lines[curline] if @names[parent]
-        end
-        parent = (parent-1) / 2
-      end
-      curline += 1
-    end
-    @lines.uniq!
-#   @lines.sort!
-    compressMares
-    makeTable
-  end
+   def build_ctree
+     @lines.clear
+     generations = Math::log(@names.length, 2).floor
+     lines = 2**(generations+1) - 2**generations
+     logger.info "Building ctree for #{@names[0]} (#{@tree[0]} gens=#{generations} with lines=#{lines}"
+     0.upto(lines-1) do |idx|
+       @lines[idx] = ""
+     end
+     curline = 0
+     (2**(generations+1)-2).downto(2**(generations)-1) do |idx|
+       if idx %2 == 0
+         @lines[curline] = 'M:' +  @lines[curline] if @names[idx]
+       else
+         @lines[curline] = @names[idx] + ':' +  @lines[curline] if @names[idx]
+       end
+       parent = (idx-1) / 2
+       while parent > 0
+         if parent %2 == 0
+           @lines[curline] = 'M:' +  @lines[curline] if @names[parent]
+         else
+           @lines[curline] = @names[parent] + ':' +  @lines[curline] if @names[parent]
+         end
+         parent = (parent-1) / 2
+       end
+       curline += 1
+     end
+     @lines.uniq!
+#    @lines.sort!
+     compressMares
+     makeTable
+   end
 
-  def compressMares
-    @lines.each do |line|
-      if pos = line.index('M:M:')
-        count = 0
-        while line.slice(pos,2) == "M:"
-          count += 1
-          pos += 2
-        end
-        line.sub!("M:" * count, (count-1).to_s + ":") 
-        redo
-      end
-    end
-  end
+   def compressMares
+     @lines.each do |line|
+       if pos = line.index('M:M:')
+         count = 0
+         while line.slice(pos,2) == "M:"
+           count += 1
+           pos += 2
+         end
+         line.sub!("M:" * count, (count-1).to_s + ":") 
+         redo
+       end
+     end
+   end
 
-  def makeTable  
-    0.upto(@lines.length-1) do |idx|
-      @lines[idx] = '<tr><td>' + @lines[idx]
-      @lines[idx].chop!
-      @lines[idx].gsub!(':','</td><td>')
-      @lines[idx] += "</td></tr>"
-    end
-  end
+   def makeTable  
+     0.upto(@lines.length-1) do |idx|
+       @lines[idx] = '<tr><td>' + @lines[idx]
+       @lines[idx].chop!
+       @lines[idx].gsub!(':','</td><td>')
+       @lines[idx] += "</td></tr>"
+     end
+   end
+ 
 end
