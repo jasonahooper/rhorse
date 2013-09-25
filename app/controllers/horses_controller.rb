@@ -87,6 +87,15 @@ class HorsesController < ApplicationController
 #   @lines.sort!
   end
 
+  def xtree
+    @tree = []
+    @names = []
+    build_tree(params[:id], 0, true)
+    @lines = []
+    build_ctree
+#   @lines.sort!
+  end
+
   def children
     @horses = Horse.paginate :page => params[:page], 
       :conditions => ["sire_id = ? or dam_id = ?", params[:id], params[:id]], :order => "name"
@@ -95,107 +104,108 @@ class HorsesController < ApplicationController
   def complete_sire_name
     horses = Horse.where("sex='h' and name like ?", params[:name] + '%').order(:name)
     render json: horses, :only => [:id, :name]
- end
+  end
 
   def complete_dam_name
     horses = Horse.where("sex='m' and name like ?", params[:name] + '%').order(:name)
     render json: horses, :only => [:id, :name]
- end
+  end
 
- private
-   # Use callbacks to share common setup or constraints between actions.
-   def set_horse
-     @horse = Horse.find(params[:id])
-   end
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_horse
+      @horse = Horse.find(params[:id])
+    end
 
-   # Never trust parameters from the scary internet, only allow the white list through.
-   def horse_params
-     params.require(:horse).permit(:name, :sex, :year, :sire_id, :dam_id)
-   end
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def horse_params
+      params.require(:horse).permit(:name, :sex, :year, :sire_id, :dam_id)
+    end
 
-   def build_tree(id, limit)
-     horse = Horse.find(id)
-     @tree.clear
-     @tree[0] = horse.id
-     @names.clear
-     @names[0] = horse.name
-     gen = 1
-     loop until !build_tree_generation(gen, limit)
-   end
+    def build_tree(id, limit, xtree=false)
+      horse = Horse.find(id)
+      @tree.clear
+      @tree[0] = horse.id
+      @names.clear
+      @names[0] = horse.name
+      gen = 1
+      loop until !build_tree_generation(gen, limit, xtree)
+    end
 
-   def build_tree_generation(gen, limit)
-     found = false
-     (2**gen - 1).step(2**(gen+1)-2,2) do |idx|
-       horse = Horse.find(@tree[idx/2]) if @tree[idx/2]
-     	if horse and horse.sire
-         @tree[idx] = horse.sire.id
-         @names[idx] = horse.sire.name
-               found = true
-             end
-             if horse and horse.dam
-         @tree[idx+1] = horse.dam.id
-         @names[idx+1] = horse.dam.name
-               found = true
-             end
-     end
-     gen += 1
-     return nil if !found || (gen > limit && limit != 0)
-     build_tree_generation(gen, limit)
-   end
+    def build_tree_generation(gen, limit, xtree)
+      # xtree follows x chrmosones - so father to father is dropped
+      found = false
+      (2**gen - 1).step(2**(gen+1)-2,2) do |idx|
+        horse = Horse.find(@tree[idx/2]) if @tree[idx/2]
+     	 if horse && horse.sire && ((xtree && horse.sex == "m") || !xtree)
+          @tree[idx] = horse.sire.id
+          @names[idx] = horse.sire.name
+          found = true
+        end
+        if horse && horse.dam
+          @tree[idx+1] = horse.dam.id
+          @names[idx+1] = horse.dam.name
+          found = true
+        end
+      end
+      gen += 1
+      return nil if !found || (gen > limit && limit != 0)
+      build_tree_generation(gen, limit, xtree)
+    end
 
-   def build_ctree
-     @lines.clear
-     generations = Math::log(@names.length, 2).floor
-     lines = 2**(generations+1) - 2**generations
-     logger.info "Building ctree for #{@names[0]} (#{@tree[0]} gens=#{generations} with lines=#{lines}"
-     0.upto(lines-1) do |idx|
-       @lines[idx] = ""
-     end
-     curline = 0
-     (2**(generations+1)-2).downto(2**(generations)-1) do |idx|
-       if idx %2 == 0
-         @lines[curline] = 'M:' +  @lines[curline] if @names[idx]
-       else
-         @lines[curline] = @names[idx] + ':' +  @lines[curline] if @names[idx]
-       end
-       parent = (idx-1) / 2
-       while parent > 0
-         if parent %2 == 0
-           @lines[curline] = 'M:' +  @lines[curline] if @names[parent]
-         else
-           @lines[curline] = @names[parent] + ':' +  @lines[curline] if @names[parent]
-         end
-         parent = (parent-1) / 2
-       end
-       curline += 1
-     end
-     @lines.uniq!
-#    @lines.sort!
-     compressMares
-     makeTable
-   end
+    def build_ctree
+      @lines.clear
+      generations = Math::log(@names.length, 2).floor
+      lines = 2**(generations+1) - 2**generations
+      logger.info "Building ctree for #{@names[0]} (#{@tree[0]} gens=#{generations} with lines=#{lines}"
+      0.upto(lines-1) do |idx|
+        @lines[idx] = ""
+      end
+      curline = 0
+      (2**(generations+1)-2).downto(2**(generations)-1) do |idx|
+        if idx %2 == 0
+          @lines[curline] = 'M:' +  @lines[curline] if @names[idx]
+        else
+          @lines[curline] = @names[idx] + ':' +  @lines[curline] if @names[idx]
+        end
+        parent = (idx-1) / 2
+        while parent > 0
+          if parent %2 == 0
+            @lines[curline] = 'M:' +  @lines[curline] if @names[parent]
+          else
+            @lines[curline] = @names[parent] + ':' +  @lines[curline] if @names[parent]
+          end
+          parent = (parent-1) / 2
+        end
+        curline += 1
+      end
+      @lines.uniq!
+#     @lines.sort!
+      compressMares
+      makeTable
+    end
 
-   def compressMares
-     @lines.each do |line|
-       if pos = line.index('M:M:')
-         count = 0
-         while line.slice(pos,2) == "M:"
-           count += 1
-           pos += 2
-         end
-         line.sub!("M:" * count, (count-1).to_s + ":") 
-         redo
-       end
-     end
-   end
+    def compressMares
+      @lines.each do |line|
+        if pos = line.index('M:M:')
+          count = 0
+          while line.slice(pos,2) == "M:"
+            count += 1
+            pos += 2
+          end
+          line.sub!("M:" * count, (count-1).to_s + ":") 
+          redo
+        end
+      end
+    end
 
-   def makeTable  
-     0.upto(@lines.length-1) do |idx|
-       @lines[idx] = '<tr><td>' + @lines[idx]
-       @lines[idx].chop!
-       @lines[idx].gsub!(':','</td><td>')
-       @lines[idx] += "</td></tr>"
-     end
-   end
+    def makeTable  
+      0.upto(@lines.length-1) do |idx|
+        @lines[idx] = '<tr><td>' + @lines[idx]
+        @lines[idx].chop!
+        @lines[idx].gsub!(':','</td><td>')
+        @lines[idx] += "</td></tr>"
+      end
+    end
  
 end
