@@ -1,0 +1,10 @@
+<%= javascript_include_tag 'ctree' %>
+<div id="ctree">
+  <table>
+    <% @lines.reverse.each do |line| %>
+    <%=  line.html_safe %>
+    <% end %>
+  </table>
+</div>
+<br />
+<%= link_to 'Return to list', horses_path %>

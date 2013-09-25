@@ -5,6 +5,7 @@ Rhorse::Application.routes.draw do
     member do
       get :tree
       get :ctree
+      get :xtree
       get :children
     end
   end

@@ -1,11 +1,2 @@
-<%= javascript_include_tag 'ctree' %>
 <h2>Horse Condensed Family Tree : <%= @names[0] %></h2>
-<div id="ctree">
-<table>
-<% @lines.reverse.each do |line| %>
-<%=  line.html_safe %>
-<% end %>
-</table>
-</div>
-<br />
-<%= link_to 'Return to list', horses_path %>
+<%= render 'ctree' %>
