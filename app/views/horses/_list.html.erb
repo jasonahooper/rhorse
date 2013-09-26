@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <table>
   <thead>
     <tr>
@@ -22,7 +24,8 @@
         <td><%= horse.dam.name if horse.dam %></td>
         <td><%= link_to 'Show', horse %></td>
         <td><%= link_to 'Edit', edit_horse_path(horse) %></td>
-        <td><%= link_to 'Destroy', horse, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', horse, method: :delete, data: { 
+          confirm: "Are you sure you want to destroy '#{horse.name}'?" } %></td>
         <td><%= link_to 'Tree', tree_horse_path(horse) %></td>
         <td><%= link_to 'XTree', xtree_horse_path(horse) %></td>
         <td><%= link_to 'Children', children_horse_path(horse) %></td>
