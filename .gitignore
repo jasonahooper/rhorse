@@ -19,4 +19,4 @@
 nohup.out
 
 # ignore db backup
-db.dmp
+db.[0-7].dmp
