@@ -2,14 +2,19 @@ var CtreeFilter = {
   // only show data that case-insensitively contains the search term
   filter_text: function() {
     $('tr').hide();
-    var search = document.getElementById("filterText").value;
-    $('tr:cicontains("' + search + '")').show();
+    var search = document.getElementById("filterText").value.split(",");
+    for (var i=0; i<search.length; i++) {
+      $('tr:cicontains("' + $.trim(search[i]) + '")').show();
+    }
   },
   // add a text input and a button to the form
   setup: function() {
     var textboxAndButton =
-      $('<input type="text" id="filterText"/> ' +
-        '<input type="button" id="filterButton" value="Filter"/><br /><br />');
+      $('' + 
+        '<input type="button" id="filterButton" value="Filter"/> ' +
+        '<input type="text" id="filterText"/> ' +
+        'Enter terms to filter with separated by commas.' +
+        '<br /><br />');
     textboxAndButton.insertBefore('#ctree'); 
     $('#filterButton').click(CtreeFilter.filter_text); 
   }
