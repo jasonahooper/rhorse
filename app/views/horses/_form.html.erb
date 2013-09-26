@@ -32,13 +32,15 @@
     <%= f.label :sire %><br>
     <%= f.number_field :sire_id, :readonly => true %>
     <%= f.text_field :sire_name, 'data-autocompleteurl' => complete_sire_name_horses_path,
-      'data-autocompleteid' => '#horse_sire_id', :class => 'autocomplete_horse_name' %>
+      'data-autocompleteid' => '#horse_sire_id', :class => 'autocomplete_horse_name', 
+      :placeholder => 'Enter sire name here' %>
   </div>
   <div class="field">
     <%= f.label :dam %><br>
     <%= f.number_field :dam_id, :readonly => true %>
     <%= f.text_field :dam_name, 'data-autocompleteurl' => complete_dam_name_horses_path,
-      'data-autocompleteid' => '#horse_dam_id', :class => 'autocomplete_horse_name' %>
+      'data-autocompleteid' => '#horse_dam_id', :class => 'autocomplete_horse_name',
+      :placeholder => 'Enter dam name here' %>
   </div>
   <div class="actions">
     <%= f.submit %>
