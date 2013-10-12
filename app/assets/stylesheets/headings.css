@@ -4,3 +4,7 @@ h1 {
   padding: 10px 10px 15px 10px;
   font-family: Tahoma, Geneva, sans-serif;
 }
+
+.input {
+  background-color:lightgreen;
+}

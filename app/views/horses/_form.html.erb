@@ -15,31 +15,31 @@
 
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :class => 'input' %>
   </div>
   <div class="field">
     <%= f.label :sex %><br>
-    <%= f.radio_button :sex, "h" %>
-    <%= f.label "Horse" %>
+    <%= f.radio_button :sex, "h"%>
+    <%= f.label "Horse", :class => 'input'%>
     <%= f.radio_button :sex, "m" %>
-    <%= f.label "Mare" %><br>
+    <%= f.label "Mare", :class => 'input' %><br>
   </div>
   <div class="field">
     <%= f.label :year %><br>
-    <%= f.number_field :year %>
+    <%= f.number_field :year, :class => 'input' %>
   </div>
   <div class="field">
     <%= f.label :sire %><br>
     <%= f.number_field :sire_id, :readonly => true %>
     <%= f.text_field :sire_name, 'data-autocompleteurl' => complete_sire_name_horses_path,
-      'data-autocompleteid' => '#horse_sire_id', :class => 'autocomplete_horse_name', 
+      'data-autocompleteid' => '#horse_sire_id', :class => 'autocomplete_horse_name input',
       :placeholder => 'Enter sire name here' %>
   </div>
   <div class="field">
     <%= f.label :dam %><br>
     <%= f.number_field :dam_id, :readonly => true %>
     <%= f.text_field :dam_name, 'data-autocompleteurl' => complete_dam_name_horses_path,
-      'data-autocompleteid' => '#horse_dam_id', :class => 'autocomplete_horse_name',
+      'data-autocompleteid' => '#horse_dam_id', :class => 'autocomplete_horse_name input',
       :placeholder => 'Enter dam name here' %>
   </div>
   <div class="actions">

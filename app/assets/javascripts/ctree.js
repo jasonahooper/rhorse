@@ -10,13 +10,13 @@ var CtreeFilter = {
   // add a text input and a button to the form
   setup: function() {
     var textboxAndButton =
-      $('' + 
+      $('' +
         '<input type="button" id="filterButton" value="Filter"/> ' +
-        '<input type="text" id="filterText"/> ' +
+        '<input type="text" id="filterText" class="input"/> ' +
         'Enter terms to filter with separated by commas.' +
         '<br /><br />');
-    textboxAndButton.insertBefore('#ctree'); 
-    $('#filterButton').click(CtreeFilter.filter_text); 
+    textboxAndButton.insertBefore('#ctree');
+    $('#filterButton').click(CtreeFilter.filter_text);
   }
 }
 // execute the function to setup the new items
