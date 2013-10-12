@@ -1,2 +1,4 @@
 #!/bin/bash
-sqlite3 db/development.sqlite3 ".backup db.`date +%u`.dmp"
+echo "Run started: `date`"
+sqlite3 /home/jason/rails_projects/rhorse/db/development.sqlite3 ".backup /home/jason/rails_projects/rhorse/db.`date +%u`.dmp"
+echo "Run ended  : `date`"
