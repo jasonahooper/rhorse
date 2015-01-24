@@ -54,3 +54,5 @@ gem 'byebug', group: [:development, :test]
 
 # Pagination
 gem 'will_paginate'
+
+gem 'newrelic_rpm'
