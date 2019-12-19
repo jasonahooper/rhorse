@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.16'
+gem 'rails', '4.2.11.1'
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
@@ -56,3 +56,5 @@ gem 'byebug', group: [:development, :test]
 gem 'will_paginate'
 
 gem 'newrelic_rpm'
+
+gem 'web-console', '~> 2.0', group: :development
