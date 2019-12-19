@@ -10,11 +10,11 @@ class HorsesController < ApplicationController
         @horses = Horse.paginate :page => params[:page], :conditions => ["id = ?", id]
       else
         search = '%' + params[:search].downcase + '%'
-        @horses = Horse.paginate :page => params[:page], :conditions => ["name like ?", search], 
+        @horses = Horse.paginate :page => params[:page], :conditions => ["name like ?", search],
         :order => "name"
       end
     else
-      @horses = Horse.paginate :page => params[:page], :order => "name"
+      @horses = Horse.order('name').paginate :page => params[:page]
     end
   end
 
@@ -97,7 +97,7 @@ class HorsesController < ApplicationController
   end
 
   def children
-    @horses = Horse.paginate :page => params[:page], 
+    @horses = Horse.paginate :page => params[:page],
       :conditions => ["sire_id = ? or dam_id = ?", params[:id], params[:id]], :order => "name"
   end
 
@@ -195,13 +195,13 @@ class HorsesController < ApplicationController
             count += 1
             pos += 2
           end
-          line.sub!("M:" * count, (count-1).to_s + ":") 
+          line.sub!("M:" * count, (count-1).to_s + ":")
           redo
         end
       end
     end
 
-    def makeTable  
+    def makeTable
       0.upto(@lines.length-1) do |idx|
         @lines[idx] = '<tr><td>' + @lines[idx]
         @lines[idx].chop!
@@ -209,5 +209,5 @@ class HorsesController < ApplicationController
         @lines[idx] += "</td></tr>"
       end
     end
- 
+
 end
