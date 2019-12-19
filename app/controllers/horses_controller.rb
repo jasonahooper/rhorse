@@ -7,11 +7,10 @@ class HorsesController < ApplicationController
     if params[:search] && params[:search] != ""
       if params[:search].length > 3 && params[:search][0..2].downcase == "id:"
         id = params[:search][3..params[:search].length - 1].to_i
-        @horses = Horse.paginate :page => params[:page], :conditions => ["id = ?", id]
+        @horses = Horse.where('id = ?', id).paginate :page => params[:page]
       else
         search = '%' + params[:search].downcase + '%'
-        @horses = Horse.paginate :page => params[:page], :conditions => ["name like ?", search],
-        :order => "name"
+        @horses = Horse.where('name like ?', search).order('name').paginate :page => params[:page]
       end
     else
       @horses = Horse.order('name').paginate :page => params[:page]
