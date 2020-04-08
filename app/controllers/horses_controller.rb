@@ -96,8 +96,8 @@ class HorsesController < ApplicationController
   end
 
   def children
-    @horses = Horse.paginate :page => params[:page],
-      :conditions => ["sire_id = ? or dam_id = ?", params[:id], params[:id]], :order => "name"
+    @horses = Horse.where("sire_id = ? or dam_id = ?", params[:id], params[:id]).order('name').
+                paginate :page => params[:page]
   end
 
   def complete_sire_name
