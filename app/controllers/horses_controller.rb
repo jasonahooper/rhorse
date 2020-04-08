@@ -101,13 +101,13 @@ class HorsesController < ApplicationController
   end
 
   def complete_sire_name
-    horses = Horse.where("sex='h' and name like ?", params[:name] + '%').order(:name)
+    horses = Horse.where("sex='h' and name like ?", params[:name] + '%').order(:name).to_a
     horses.unshift Horse.new(name: "*** unknown ***")
     render json: horses, :only => [:id, :name]
   end
 
   def complete_dam_name
-    horses = Horse.where("sex='m' and name like ?", params[:name] + '%').order(:name)
+    horses = Horse.where("sex='m' and name like ?", params[:name] + '%').order(:name).to_a
     horses.unshift Horse.new(name: "*** unknown ***")
     render json: horses, :only => [:id, :name]
   end
